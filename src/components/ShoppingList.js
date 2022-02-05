@@ -4,14 +4,23 @@ import Item from "./Item";
 function ShoppingList({ items }) {
 
   const [selectedCategory, setCategory] = useState("All")
-
+  console.log(selectedCategory)
+ 
   function handleCategory(e){
-    console.log(e)
     setCategory((selectedCategory) => {
       selectedCategory = e.target.value
+      // console.log(selectedCategory)
+      return selectedCategory
     })
   }
-
+  
+  const filteredItems = items.filter(item => {
+    if(selectedCategory === "All"){
+      return true
+    }
+   return item.category === selectedCategory
+  })
+ 
 
   return (
     <div className="ShoppingList">
@@ -24,7 +33,7 @@ function ShoppingList({ items }) {
         </select>
       </div>
       <ul className="Items">
-        {items.filter(item => item.category === selectedCategory).map((item) => (
+        {filteredItems.map((item) => (
           <Item key={item.id} name={item.name} category={item.category} />
         ))}
       </ul>
